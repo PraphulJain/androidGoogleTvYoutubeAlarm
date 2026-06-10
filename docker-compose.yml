@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  alarm-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: alarm-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # API Configuration
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      
+      # Google TV Configuration
+      # Set your TV's IP address here
+      - TV_IP=${TV_IP}
+      - TV_PORT=5555
+      
+      # Timezone (set to your local timezone)
+      - TZ=${TZ:-UTC}
+    
+    # Network mode host may be needed for ADB connectivity
+    # Uncomment if you have issues connecting to TV
+    # network_mode: host
+    
+    volumes:
+      # Persist alarm data
+      - alarm-data:/app/data
+      
+      # Mount ADB keys for persistent pairing
+      - adb-keys:/root/.android
+    
+    # Privileged mode may be needed for ADB
+    # Uncomment if you have permission issues
+    # privileged: true
+
+volumes:
+  alarm-data:
+    driver: local
+  adb-keys:
+    driver: local

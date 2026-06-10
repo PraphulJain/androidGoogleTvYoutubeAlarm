@@ -1,0 +1,6 @@
+# Core dependencies will be added here
+# Example:
+# fastapi
+# uvicorn
+# apscheduler
+# python-dotenv

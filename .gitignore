@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project-specific
+# Alarm data directory
+backend/data/
+data/
+
+# Docker volumes
+.docker/
