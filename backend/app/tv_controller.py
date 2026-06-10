@@ -96,14 +96,22 @@ class TVController:
                 text=True,
                 timeout=5
             )
-            if result.returncode == 0:
-                # Parse volume from output (usually format: "volume is X")
-                match = re.search(r'(\d+)', result.stdout)
+            
+            # Log full output for debugging
+            logger.info(f"Volume command stdout: {result.stdout.strip()}")
+            
+            if result.returncode == 0 and result.stdout:
+                # Parse volume from output - look specifically for "volume is X" pattern
+                match = re.search(r'volume is (\d+)', result.stdout)
                 if match:
                     volume = int(match.group(1))
-                    logger.info(f"Current volume: {volume}")
+                    logger.info(f"Parsed current volume: {volume}")
                     return volume
-            logger.error(f"Failed to get volume: {result.stderr}")
+                else:
+                    logger.error(f"Could not parse volume from output: {result.stdout.strip()}")
+                    return None
+            
+            logger.error(f"Failed to get volume - returncode: {result.returncode}, stderr: {result.stderr}")
             return None
         except Exception as e:
             logger.error(f"Error getting volume: {e}")
@@ -236,9 +244,9 @@ class TVController:
             logger.info("Step 2: Waking up TV...")
             self.wake_up()
             
-            # Step 3: Wait 30 seconds
-            logger.info("Step 3: Waiting 30 seconds for TV to fully wake up...")
-            time.sleep(30)
+            # Step 3: Wait 120 seconds
+            logger.info("Step 3: Waiting 120 seconds for TV to fully wake up...")
+            time.sleep(120)
             
             # Step 4: Set volume
             logger.info("Step 4: Adjusting volume...")
