@@ -21,10 +21,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/app /app/app
 
 # Set timezone (can be overridden by environment variable)
-ENV TZ=UTC
+ENV TZ=Asia/Kolkata
 
 # Expose API port
-EXPOSE 8000
+EXPOSE 5127
 
 # Run the application
 CMD ["python", "-m", "app.main"]

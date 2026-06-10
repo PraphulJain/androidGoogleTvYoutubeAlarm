@@ -1,6 +1,12 @@
-# Core dependencies will be added here
-# Example:
-# fastapi
-# uvicorn
-# apscheduler
-# python-dotenv
+# Web Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+
+# Logging
+logtail-python==0.2.6
+
+# Timezone support (Python 3.11+ has zoneinfo builtin)
+# No extra dependency needed for zoneinfo
+
+# Development
+python-dotenv==1.0.0

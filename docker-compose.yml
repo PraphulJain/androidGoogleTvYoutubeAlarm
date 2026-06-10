@@ -8,19 +8,28 @@ services:
     container_name: alarm-backend
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "5127:5127"
     environment:
       # API Configuration
       - API_HOST=0.0.0.0
-      - API_PORT=8000
+      - API_PORT=5127
+      
+      # Security
+      - API_PASSWORD=${API_PASSWORD}
       
       # Google TV Configuration
       # Set your TV's IP address here
       - TV_IP=${TV_IP}
-      - TV_PORT=5555
+      - TV_PORT=${TV_PORT}
       
       # Timezone (set to your local timezone)
-      - TZ=${TZ:-UTC}
+      - TZ=${TZ:-Asia/Kolkata}
+      
+      # Logging
+      - LOGTAIL_TOKEN=${LOGTAIL_TOKEN:-}
+      
+      # Database
+      - DB_PATH=/app/data/alarms.db
     
     # Network mode host may be needed for ADB connectivity
     # Uncomment if you have issues connecting to TV
